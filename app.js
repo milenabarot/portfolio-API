@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 const app = express();
 
 app.use(express.json());
+require("dotenv/config");
 
 app.use(cors());
 
@@ -23,8 +24,8 @@ const transport = nodemailer.createTransport({
   host: "smtp-relay.sendinblue.com",
   port: 587,
   auth: {
-    user: "milenabarot@gmail.com",
-    pass: "Y62nyzJI0ZDwjtRf",
+    user: process.env.EMAIL,
+    pass: process.env.PASS,
   },
 });
 
@@ -34,8 +35,8 @@ app.get("/api", (req, res, next) => {
 
 app.post("/api/email", (req, res, next) => {
   const message = {
-    to: "milenabarot@gmail.com",
-    from: "milenabarot@gmail.com",
+    to: process.env.EMAIL,
+    from: process.env.EMAIL,
     subject: `A new message from ${req.body.name}`,
     html: `<p>${req.body.message}</p> <br /> <p>from: ${req.body.email}</p>`,
   };
